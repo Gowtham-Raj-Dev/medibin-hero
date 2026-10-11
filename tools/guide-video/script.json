@@ -1,0 +1,548 @@
+{
+  "voices": {
+    "en": {
+      "voice": "en-IN-NeerjaExpressiveNeural",
+      "rate": "+0%",
+      "pitch": "+0Hz"
+    },
+    "ta": {
+      "voice": "ta-IN-PallaviNeural",
+      "rate": "-6%",
+      "pitch": "+0Hz"
+    }
+  },
+  "ui": {
+    "en": {
+      "brand": "Bin guide",
+      "titleHead": "Know your bins",
+      "titleSub": "Bio-medical waste segregation guide",
+      "tagline": "Right waste. Right bin. Every time.",
+      "cta": "Play Now",
+      "ctaSub": "Free in your browser · Laptop & mobile · English + தமிழ்"
+    },
+    "ta": {
+      "brand": "தொட்டி வழிகாட்டி",
+      "titleHead": "உங்கள் தொட்டிகளை அறிந்து கொள்ளுங்கள்",
+      "titleSub": "உயிர் மருத்துவக் கழிவுப் பிரிப்பு வழிகாட்டி",
+      "tagline": "சரியான கழிவு. சரியான தொட்டி.",
+      "cta": "Play Now · விளையாடுங்கள்",
+      "ctaSub": "இலவசம் · கணினி & மொபைல் · English + தமிழ்"
+    }
+  },
+  "intro": [
+    {
+      "id": "intro1",
+      "en": {
+        "vo": "Welcome to MediBin Hero."
+      },
+      "ta": {
+        "vo": "மெடிபின் ஹீரோவுக்கு வரவேற்கிறோம்."
+      }
+    },
+    {
+      "id": "intro2",
+      "en": {
+        "vo": "Hospital waste is sorted into four colour-coded bins."
+      },
+      "ta": {
+        "vo": "மருத்துவமனைக் கழிவுகளை நான்கு நிறத் தொட்டிகளில் பிரித்துப் போட வேண்டும்."
+      }
+    },
+    {
+      "id": "intro3",
+      "en": {
+        "vo": "Let's see what goes into each one."
+      },
+      "ta": {
+        "vo": "எந்தக் கழிவு எந்தத் தொட்டியில் என்று பார்ப்போம்."
+      }
+    }
+  ],
+  "bins": [
+    {
+      "id": "yellow",
+      "en": {
+        "name": "Yellow bin",
+        "label": "Infectious Waste",
+        "vo": "The yellow bin is for infectious waste."
+      },
+      "ta": {
+        "name": "மஞ்சள் தொட்டி",
+        "label": "தொற்றுக் கழிவு",
+        "vo": "மஞ்சள் நிறத் தொட்டி, தொற்றுக் கழிவுகளுக்கானது."
+      },
+      "items": [
+        {
+          "id": "y1",
+          "models": [
+            "bone"
+          ],
+          "en": {
+            "label": "Post-operative body parts, placenta",
+            "vo": "Body parts removed in surgery, and placenta."
+          },
+          "ta": {
+            "label": "உடல் பாகங்கள், நஞ்சுக்கொடி",
+            "vo": "அறுவை சிகிச்சையில் அகற்றப்பட்ட உடல் பாகங்கள், நஞ்சுக்கொடி."
+          }
+        },
+        {
+          "id": "y2",
+          "models": [
+            "pop"
+          ],
+          "en": {
+            "label": "Plaster of Paris (POP)",
+            "vo": "Plaster of Paris casts."
+          },
+          "ta": {
+            "label": "மாவுக் கட்டு (POP)",
+            "vo": "மாவுக் கட்டு."
+          }
+        },
+        {
+          "id": "y3",
+          "models": [
+            "cotton"
+          ],
+          "en": {
+            "label": "Cotton waste",
+            "vo": "Used cotton."
+          },
+          "ta": {
+            "label": "கழிவுப் பஞ்சு",
+            "vo": "பயன்படுத்திய பஞ்சு."
+          }
+        },
+        {
+          "id": "y4",
+          "models": [
+            "dressing"
+          ],
+          "en": {
+            "label": "Dressing materials",
+            "vo": "Dressing materials and bandages."
+          },
+          "ta": {
+            "label": "கட்டுத் துணிக் கழிவுகள்",
+            "vo": "காயத்திற்குக் கட்டிய கட்டுத் துணிகள்."
+          }
+        },
+        {
+          "id": "y5",
+          "models": [
+            "bedding",
+            "cloth"
+          ],
+          "en": {
+            "label": "Beddings, body-fluid contaminated paper & cloth",
+            "vo": "Bedding, paper and cloth stained with blood or body fluids."
+          },
+          "ta": {
+            "label": "இரத்தம், உடல் திரவம் படிந்த படுக்கை விரிப்பு, காகிதம், துணி",
+            "vo": "இரத்தம் அல்லது உடல் திரவம் படிந்த படுக்கை விரிப்பு, காகிதம், துணி."
+          }
+        },
+        {
+          "id": "y6",
+          "models": [
+            "mask",
+            "cap"
+          ],
+          "en": {
+            "label": "Face mask, cap",
+            "vo": "Face masks and caps."
+          },
+          "ta": {
+            "label": "முக மூடி, தொப்பி",
+            "vo": "முக மூடி, தலைத் தொப்பி."
+          }
+        },
+        {
+          "id": "y7",
+          "models": [
+            "medicine"
+          ],
+          "en": {
+            "label": "Cytotoxic, expired & discarded medicines",
+            "vo": "Cytotoxic, expired and discarded medicines."
+          },
+          "ta": {
+            "label": "சைட்டோடாக்ஸிக், காலாவதியான, நிராகரிக்கப்பட்ட மருந்துகள்",
+            "vo": "சைட்டோடாக்ஸிக் மருந்துகள், காலாவதியான மற்றும் நிராகரிக்கப்பட்ட மருந்துகள்."
+          }
+        },
+        {
+          "id": "y8",
+          "models": [
+            "lab"
+          ],
+          "en": {
+            "label": "Pathological & lab waste",
+            "vo": "And pathological and laboratory waste."
+          },
+          "ta": {
+            "label": "நோயியல், ஆய்வகக் கழிவுகள்",
+            "vo": "நோயியல் மற்றும் ஆய்வகக் கழிவுகள்."
+          }
+        }
+      ]
+    },
+    {
+      "id": "red",
+      "en": {
+        "name": "Red bin",
+        "label": "Contaminated Plastic",
+        "vo": "The red bin is for contaminated plastic."
+      },
+      "ta": {
+        "name": "சிவப்பு தொட்டி",
+        "label": "பிளாஸ்டிக் கழிவு",
+        "vo": "சிவப்பு நிறத் தொட்டி, மாசுபட்ட பிளாஸ்டிக் கழிவுகளுக்கானது."
+      },
+      "items": [
+        {
+          "id": "r1",
+          "models": [
+            "syringe"
+          ],
+          "en": {
+            "label": "Syringe without needles",
+            "vo": "Syringes, without the needle."
+          },
+          "ta": {
+            "label": "ஊசி இல்லாத சிரிஞ்சு",
+            "vo": "ஊசி இல்லாத சிரிஞ்சுகள்."
+          }
+        },
+        {
+          "id": "r2",
+          "models": [
+            "gloves",
+            "iv-bottle"
+          ],
+          "en": {
+            "label": "Gloves, IV bottles",
+            "vo": "Gloves and IV bottles.",
+            "say": "Gloves, and I V bottles."
+          },
+          "ta": {
+            "label": "கையுறைகள், குளுக்கோஸ் பாட்டில்கள்",
+            "vo": "கையுறைகள், குளுக்கோஸ் பாட்டில்கள்."
+          }
+        },
+        {
+          "id": "r3",
+          "models": [
+            "blood-tube"
+          ],
+          "en": {
+            "label": "All blood tubes",
+            "vo": "All blood collection tubes."
+          },
+          "ta": {
+            "label": "அனைத்து இரத்தக் குழாய்கள்",
+            "vo": "அனைத்து இரத்தப் பரிசோதனைக் குழாய்கள்."
+          }
+        },
+        {
+          "id": "r4",
+          "models": [
+            "esr-tube"
+          ],
+          "en": {
+            "label": "ESR tubes",
+            "vo": "ESR tubes.",
+            "say": "E S R tubes."
+          },
+          "ta": {
+            "label": "ESR குழாய்கள்",
+            "vo": "ESR குழாய்கள்.",
+            "say": "ஈ எஸ் ஆர் குழாய்கள்."
+          }
+        },
+        {
+          "id": "r5",
+          "models": [
+            "vidas"
+          ],
+          "en": {
+            "label": "VIDAS strip",
+            "vo": "VIDAS strips.",
+            "say": "Vidas strips."
+          },
+          "ta": {
+            "label": "VIDAS ஸ்ட்ரிப்",
+            "vo": "VIDAS ஸ்ட்ரிப்.",
+            "say": "விடாஸ் ஸ்ட்ரிப்."
+          }
+        },
+        {
+          "id": "r6",
+          "models": [
+            "rapid-card"
+          ],
+          "en": {
+            "label": "Rapid cards",
+            "vo": "And rapid test cards."
+          },
+          "ta": {
+            "label": "ரேபிட் கார்டுகள்",
+            "vo": "ரேபிட் டெஸ்ட் கார்டுகள்."
+          }
+        }
+      ]
+    },
+    {
+      "id": "blue",
+      "en": {
+        "name": "Blue bin",
+        "label": "Glass & Metal",
+        "vo": "The blue bin is for glass and metal."
+      },
+      "ta": {
+        "name": "நீலத் தொட்டி",
+        "label": "கண்ணாடி & உலோகம்",
+        "vo": "நீல நிறத் தொட்டி, கண்ணாடி மற்றும் உலோகக் கழிவுகளுக்கானது."
+      },
+      "items": [
+        {
+          "id": "b1",
+          "models": [
+            "broken-glass"
+          ],
+          "en": {
+            "label": "Broken glass",
+            "vo": "Broken glass."
+          },
+          "ta": {
+            "label": "உடைந்த கண்ணாடி",
+            "vo": "உடைந்த கண்ணாடி."
+          }
+        },
+        {
+          "id": "b2",
+          "models": [
+            "ampoule",
+            "glass-bottle"
+          ],
+          "en": {
+            "label": "Ampoules",
+            "vo": "Ampoules and glass vials."
+          },
+          "ta": {
+            "label": "கண்ணாடி குப்பிகள்",
+            "vo": "கண்ணாடி ஆம்பூல்கள், குப்பிகள்."
+          }
+        },
+        {
+          "id": "b3",
+          "models": [
+            "lab-slide"
+          ],
+          "en": {
+            "label": "Lab slides",
+            "vo": "Lab slides."
+          },
+          "ta": {
+            "label": "கண்ணாடி தட்டைகள் (ஸ்லைட்ஸ்)",
+            "vo": "ஆய்வகக் கண்ணாடி ஸ்லைடுகள்."
+          }
+        },
+        {
+          "id": "b4",
+          "models": [
+            "nails"
+          ],
+          "en": {
+            "label": "Nails",
+            "vo": "Nails."
+          },
+          "ta": {
+            "label": "ஆணிகள்",
+            "vo": "ஆணிகள்."
+          }
+        },
+        {
+          "id": "b5",
+          "models": [
+            "implant"
+          ],
+          "en": {
+            "label": "Metallic body implants",
+            "vo": "Metallic body implants."
+          },
+          "ta": {
+            "label": "உலோக உடல் உள்வைப்புகள்",
+            "vo": "உலோக உடல் உள்வைப்புகள்."
+          }
+        },
+        {
+          "id": "b6",
+          "models": [
+            "scissors"
+          ],
+          "en": {
+            "label": "Scissors",
+            "vo": "And scissors."
+          },
+          "ta": {
+            "label": "கத்திரிக்கோல்",
+            "vo": "கத்திரிக்கோல்."
+          }
+        }
+      ]
+    },
+    {
+      "id": "green",
+      "en": {
+        "name": "Green bin",
+        "label": "General Waste",
+        "vo": "The green bin is for general waste."
+      },
+      "ta": {
+        "name": "பச்சைத் தொட்டி",
+        "label": "பொதுவான கழிவு",
+        "vo": "பச்சை நிறத் தொட்டி, பொதுவான கழிவுகளுக்கானது."
+      },
+      "items": [
+        {
+          "id": "g1",
+          "models": [
+            "paper",
+            "food-box",
+            "carton",
+            "paper-bag"
+          ],
+          "en": {
+            "label": "General waste",
+            "vo": "General waste, like paper, boxes and cartons."
+          },
+          "ta": {
+            "label": "பொதுவான குப்பை கழிவுகள்",
+            "vo": "காகிதம், அட்டைப் பெட்டி போன்ற பொதுவான குப்பைகள்."
+          }
+        },
+        {
+          "id": "g2",
+          "models": [
+            "sandwich",
+            "banana",
+            "apple"
+          ],
+          "en": {
+            "label": "Food",
+            "vo": "Leftover food."
+          },
+          "ta": {
+            "label": "உணவு",
+            "vo": "மீதமான உணவு."
+          }
+        },
+        {
+          "id": "g3",
+          "models": [
+            "pencil",
+            "notebook"
+          ],
+          "en": {
+            "label": "Stationery",
+            "vo": "Stationery."
+          },
+          "ta": {
+            "label": "எழுது பொருட்கள்",
+            "vo": "எழுது பொருட்கள்."
+          }
+        },
+        {
+          "id": "g4",
+          "models": [
+            "paper-cup"
+          ],
+          "en": {
+            "label": "Paper cup",
+            "vo": "Paper cups."
+          },
+          "ta": {
+            "label": "காகித கப்",
+            "vo": "காகித கப்."
+          }
+        },
+        {
+          "id": "g5",
+          "models": [
+            "fish-bones",
+            "vegetable",
+            "egg-shell"
+          ],
+          "en": {
+            "label": "Kitchen waste",
+            "vo": "And kitchen waste."
+          },
+          "ta": {
+            "label": "சமையலறை கழிவுப் பொருட்கள்",
+            "vo": "சமையலறைக் கழிவுகள்."
+          }
+        }
+      ]
+    }
+  ],
+  "recap": [
+    {
+      "id": "rc-yellow",
+      "en": {
+        "vo": "Yellow: infectious waste."
+      },
+      "ta": {
+        "vo": "மஞ்சள்: தொற்றுக் கழிவு."
+      }
+    },
+    {
+      "id": "rc-red",
+      "en": {
+        "vo": "Red: contaminated plastic."
+      },
+      "ta": {
+        "vo": "சிவப்பு: பிளாஸ்டிக் கழிவு."
+      }
+    },
+    {
+      "id": "rc-blue",
+      "en": {
+        "vo": "Blue: glass and metal."
+      },
+      "ta": {
+        "vo": "நீலம்: கண்ணாடி, உலோகம்."
+      }
+    },
+    {
+      "id": "rc-green",
+      "en": {
+        "vo": "Green: general waste."
+      },
+      "ta": {
+        "vo": "பச்சை: பொதுவான கழிவு."
+      }
+    }
+  ],
+  "end": [
+    {
+      "id": "end1",
+      "en": {
+        "vo": "Right waste, right bin, every time."
+      },
+      "ta": {
+        "vo": "சரியான கழிவு, சரியான தொட்டி. ஒவ்வொரு முறையும்."
+      }
+    },
+    {
+      "id": "end2",
+      "en": {
+        "vo": "Now play MediBin Hero, and test yourself."
+      },
+      "ta": {
+        "vo": "இப்போது மெடிபின் ஹீரோ விளையாடி, உங்களைச் சோதித்துப் பாருங்கள்."
+      }
+    }
+  ]
+}

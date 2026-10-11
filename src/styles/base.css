@@ -1,0 +1,276 @@
+/* Design tokens and shared pieces (buttons, icon buttons, chips). */
+:root {
+  --bg-0: #03151c;
+  --bg-1: #062834;
+  --bg-2: #0a3b49;
+  --ink: #f1fbf8;
+  --ink-dim: #a8c7c9;
+  --ink-mute: #6c9094;
+  --line: rgba(255, 255, 255, 0.13);
+  --glass: rgba(255, 255, 255, 0.06);
+  --glass-2: rgba(255, 255, 255, 0.11);
+  --mint: #2ee6a8;
+  --mint-deep: #0fb583;
+  --sun: #ffd43b;
+  --danger: #ff5a52;
+  --yellow: #f5c518;
+  --red: #e5352b;
+  --blue: #1f7fe0;
+  --green: #2faa4f;
+  --display: 'Baloo Thambi 2 Variable', 'Nirmala UI', 'Noto Sans Tamil', system-ui, sans-serif;
+  --body: 'Outfit Variable', 'Baloo Thambi 2 Variable', 'Nirmala UI', 'Noto Sans Tamil', system-ui, sans-serif;
+  --radius: 24px;
+  --shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.65);
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg-0);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--display);
+  line-height: 1.1;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.7em;
+  padding: 0.1em 0.45em;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom-width: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  font: 700 0.85em var(--body);
+}
+
+:focus-visible {
+  outline: 3px solid var(--mint);
+  outline-offset: 3px;
+}
+
+.route-loading {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  color: var(--ink-dim);
+  font: 600 1.1rem var(--display);
+}
+/* phone held upright: the game's loading screen is already landscape, like the game itself
+   (same transform as .play.is-rotated in play.css) */
+@media (pointer: coarse) and (orientation: portrait) {
+  .route-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vh;
+    width: 100dvh;
+    height: 100vw;
+    height: 100dvw;
+    min-height: 0;
+    transform-origin: top left;
+    transform: translateX(100vw) rotate(90deg);
+  }
+}
+
+/* ── buttons ─────────────────────────────────────────────────────────────── */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  padding: 0.85em 1.5em;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font: 700 1rem var(--display);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.btn:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+}
+.btn-block {
+  width: 100%;
+}
+
+.btn-play {
+  padding: 1em 1.9em;
+  font-size: 1.2rem;
+  color: #04261c;
+  background: linear-gradient(135deg, #7dffd0 0%, var(--mint) 45%, #14c98f 100%);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35) inset, 0 14px 34px -10px rgba(46, 230, 168, 0.75), 0 4px 0 #0a8f68;
+}
+.btn-play::after {
+  /* moving shine */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.55) 50%, transparent 65%);
+  transform: translateX(-120%);
+  animation: shine 3.2s ease-in-out infinite;
+}
+.btn-play:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.45) inset, 0 20px 44px -10px rgba(46, 230, 168, 0.9), 0 6px 0 #0a8f68;
+}
+.btn-play:hover .btn-arrow {
+  transform: translateX(4px);
+}
+.btn-arrow {
+  transition: transform 0.2s ease;
+}
+.btn-play:disabled {
+  color: var(--ink-dim);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--line);
+  box-shadow: none;
+  cursor: default;
+}
+.btn-play:disabled::after {
+  display: none;
+}
+.btn-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--mint);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.btn-ghost {
+  color: var(--ink);
+  background: var(--glass);
+  border-color: var(--line);
+  backdrop-filter: blur(10px);
+}
+.btn-ghost:hover {
+  background: var(--glass-2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.icon-btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(4, 26, 34, 0.62);
+  backdrop-filter: blur(12px);
+  color: var(--ink);
+  transition: background 0.2s ease, transform 0.15s ease, opacity 0.2s ease;
+}
+.icon-btn:hover:not(:disabled) {
+  background: rgba(20, 70, 84, 0.85);
+  transform: translateY(-1px);
+}
+.icon-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.icon-btn.is-off {
+  color: var(--ink-mute);
+}
+.icon-btn .mute-slash {
+  position: absolute;
+  color: var(--danger);
+}
+.sound-toggles {
+  display: flex;
+  gap: 8px;
+}
+
+.spinner {
+  width: 1.1em;
+  height: 1.1em;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.25);
+  border-top-color: var(--mint);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes shine {
+  0%,
+  55% {
+    transform: translateX(-120%);
+  }
+  85%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+@keyframes bump {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.28);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.bump {
+  display: inline-block;
+  animation: bump 0.35s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

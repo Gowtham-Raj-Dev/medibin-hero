@@ -1,0 +1,7 @@
+node_modules
+dist
+tools/guide-video/work
+tools/promo-video/work
+__pycache__
+*.local
+.DS_Store

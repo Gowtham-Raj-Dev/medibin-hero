@@ -1,0 +1,23 @@
+{
+  "name": "medibin-hero",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "MediBin Hero — a 3D hospital waste segregation game (English + Tamil)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-router-dom": "^7.18.4",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.1.2",
+    "playwright-core": "^1.55.1",
+    "vite": "^8.3.4"
+  }
+}
