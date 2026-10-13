@@ -86,6 +86,12 @@ export default function Play() {
     if (stageRef.current) stageRef.current.rotated = rotated;
   }, [rotated]);
 
+  // While the name form, pause menu or results cover the 3D view it only needs a light redraw.
+  const covered = game.phase === 'idle' || game.phase === 'paused' || game.phase === 'over';
+  useEffect(() => {
+    if (stageRef.current) stageRef.current.dimmed = covered;
+  }, [covered]);
+
   const choose = useCallback((i) => gameRef.current?.choose(i), []);
 
   // Keyboard: 1-4 pick a bin, Esc / P pause.

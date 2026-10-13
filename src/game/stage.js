@@ -76,6 +76,22 @@ const OUTSIDE_MODELS = [
 // Sample item floating over each bin on the home page.
 const SHOWCASE_ITEMS = { yellow: 'cotton', red: 'syringe', blue: 'scissors', green: 'banana' };
 
+// Quality ladder, best first. A slow device loses shadow detail before sharpness, and the
+// picture never goes below MIN_RATIO, so the models stay crisp on a phone.
+// shadows: 1 = redrawn every frame, 2 = every second frame, 0 = soft blobs on the floor instead
+const QUALITY = [
+  { scale: 1, shadows: 1 },
+  { scale: 1, shadows: 2 },
+  { scale: 0.85, shadows: 2 },
+  { scale: 0.85, shadows: 0 },
+  { scale: 0.72, shadows: 0 },
+];
+const MAX_RATIO = 2;
+const MIN_RATIO = 1.35;
+const SLOW_FPS = 27;
+const FAST_FPS = 52;
+const FPS_WINDOW = 2.5; // seconds of play measured before judging
+
 export class Stage {
   constructor(container, { mode = 'game', onBinClick, onBinHover, onLayout, onContextLost } = {}) {
     this.container = container;
@@ -91,14 +107,17 @@ export class Stage {
     this.time = 0;
     this.shake = 0;
     this.rotated = false; // true while the page draws the game turned 90° (phone held upright)
+    this.dimmed = false; // true while a panel covers the stage: draw at half rate and don't judge the speed
     this.itemHome = ITEM_HOME.clone();
     this.bins = [];
     this.characters = [];
     this.item = null;
     this.itemFlying = false;
     this.hoverIndex = -1;
-    this._quality = 2; // 2 = full, 1 = no shadows, 0 = no shadows + pixel ratio 1
-    this._slowTime = 0;
+    this._quality = 0; // index into QUALITY
+    this._bestQuality = 0; // a step that proved too heavy is not tried again
+    this._fps = { time: 0, frames: 0, skip: 0, fast: 0, sinceUp: Infinity };
+    this._draws = 0;
     this._loaded = false;
     this._itemModels = new Map(); // item id → model, built once and reused every time it comes up
     this._tweens = [];
@@ -108,7 +127,8 @@ export class Stage {
 
     const renderer = (this.renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' }));
     const touch = window.matchMedia('(pointer: coarse)').matches;
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, touch ? 1.75 : 2));
+    this._baseRatio = Math.min(window.devicePixelRatio || 1, MAX_RATIO);
+    renderer.setPixelRatio(this._baseRatio);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.NeutralToneMapping;
     renderer.toneMappingExposure = 1.05;
@@ -144,6 +164,7 @@ export class Stage {
 
     this._buildRoom();
     this._buildItemRig();
+    this._buildBlobs();
 
     this._raycaster = new THREE.Raycaster();
     this._pointer = new THREE.Vector2();
@@ -488,6 +509,29 @@ export class Stage {
     });
   }
 
+  /** Soft dark patches under the bins and characters, shown when real shadows are switched off. */
+  _buildBlobs() {
+    const soft = canvasTexture(128, 128, (ctx) => {
+      const g = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+      g.addColorStop(0, 'rgba(20,34,44,0.5)');
+      g.addColorStop(0.55, 'rgba(20,34,44,0.26)');
+      g.addColorStop(1, 'rgba(20,34,44,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, 128, 128);
+    });
+    this._blobMaterial = new THREE.MeshBasicMaterial({ map: soft, transparent: true, depthWrite: false });
+    this._blobGeometry = new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2);
+    this._blobs = new THREE.Group();
+    this._blobs.visible = false;
+    this.scene.add(this._blobs);
+  }
+  _addBlob(x, z, width, depth) {
+    const blob = new THREE.Mesh(this._blobGeometry, this._blobMaterial);
+    blob.scale.set(width, 1, depth);
+    blob.position.set(x, 0.004, z);
+    this._blobs.add(blob);
+  }
+
   /** Load fonts, models and animations, then build everything that depends on them. */
   async load(onProgress) {
     const report = (() => {
@@ -524,6 +568,7 @@ export class Stage {
       bin.group.add(arrow);
       this.scene.add(bin.group);
       this.bins.push(bin);
+      this._addBlob(bin.group.position.x - 0.08, -0.1, 1.3, 1.25);
     });
     this._emitLayout();
 
@@ -578,6 +623,7 @@ export class Stage {
     const character = { model, mixer, actions, current: null, revertAt: 0, idleAt: 4 + Math.random() * 4 };
     this.scene.add(model);
     this.characters.push(character);
+    this._addBlob(def.position[0], def.position[2], 1.0, 0.8);
     this._play(character, 'idle', 0);
   }
 
@@ -730,17 +776,51 @@ export class Stage {
     }
   }
 
-  // Slow devices: if the frame rate stays under ~25 fps, drop the shadows first, then some sharpness.
+  // Slow devices step down the QUALITY ladder; if there turns out to be room they step back up.
+  // Only steady play is judged: one-off stalls (shaders compiling, the screen turning) are left out.
   _watchFrameRate(real) {
-    if (!this._loaded || this._quality === 0) return;
-    this._slowTime = real > 0.04 ? this._slowTime + real : Math.max(0, this._slowTime - real * 2);
-    if (this._slowTime < 2.5) return;
-    this._slowTime = 0;
-    this._quality -= 1;
-    if (this._quality === 1) {
-      this._keyLight.castShadow = false;
+    const f = this._fps;
+    if (!this._loaded || this.dimmed) {
+      f.time = f.frames = 0;
+      f.skip = 1; // let things settle for a second once play is back
+      return;
+    }
+    if (f.skip > 0) {
+      f.skip -= real;
+      return;
+    }
+    if (real > 0.25) return;
+    f.time += real;
+    f.frames += 1;
+    f.sinceUp += real;
+    if (f.time < FPS_WINDOW) return;
+    const fps = f.frames / f.time;
+    f.time = f.frames = 0;
+    if (fps < SLOW_FPS && this._quality < QUALITY.length - 1) {
+      if (f.sinceUp < FPS_WINDOW * 2.5) this._bestQuality = this._quality + 1; // the step up was too much
+      f.fast = 0;
+      this._setQuality(this._quality + 1);
+    } else if (fps > FAST_FPS && this._quality > this._bestQuality) {
+      f.fast += 1;
+      if (f.fast < 4) return;
+      f.fast = 0;
+      f.sinceUp = 0;
+      this._setQuality(this._quality - 1);
     } else {
-      this.renderer.setPixelRatio(1);
+      f.fast = 0;
+    }
+  }
+
+  _setQuality(level) {
+    this._quality = level;
+    const q = QUALITY[level];
+    const ratio = Math.max(Math.min(this._baseRatio, MIN_RATIO), this._baseRatio * q.scale);
+    this._keyLight.castShadow = q.shadows > 0;
+    this._blobs.visible = q.shadows === 0;
+    this.renderer.shadowMap.autoUpdate = q.shadows === 1;
+    this._fps.skip = 1;
+    if (ratio !== this.renderer.getPixelRatio()) {
+      this.renderer.setPixelRatio(ratio);
       this.resize();
     }
   }
@@ -809,6 +889,7 @@ export class Stage {
     this.camera.updateProjectionMatrix();
     this.camera.updateMatrixWorld();
     this._emitLayout();
+    this._fps.skip = Math.max(this._fps.skip, 0.5); // a resize stalls a frame or two
   }
 
   _project(x, y, z) {
@@ -828,9 +909,10 @@ export class Stage {
   _frame() {
     if (this.disposed) return;
     const now = performance.now();
-    const real = Math.min((now - this._lastFrame) / 1000, 0.1);
+    const elapsed = (now - this._lastFrame) / 1000;
+    const real = Math.min(elapsed, 0.1);
     this._lastFrame = now;
-    this._watchFrameRate(real);
+    this._watchFrameRate(elapsed);
     const dt = this.paused ? 0 : real;
     this.time += real;
     const time = this.time;
@@ -930,6 +1012,9 @@ export class Stage {
     }
     this.camera.lookAt(this._cameraTarget);
 
+    this._draws += 1;
+    if (this.dimmed && this._draws % 2) return;
+    if (QUALITY[this._quality].shadows === 2) this.renderer.shadowMap.needsUpdate = this._draws % 2 === 0;
     this.renderer.render(this.scene, this.camera);
   }
 

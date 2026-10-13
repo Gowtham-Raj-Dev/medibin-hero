@@ -1561,3 +1561,17 @@
     display: none;
   }
 }
+
+/* Phones and tablets: a blurred panel makes the browser re-blur the live 3D view on every
+   frame, which costs more than drawing the game. Use plain, slightly darker panels there. */
+@media (pointer: coarse) {
+  .play :is(.player-chip, .score-chip, .level-chip, .lives, .streak-chip, .item-card, .countdown, .overlay, .icon-btn, .btn-ghost) {
+    backdrop-filter: none;
+  }
+  .play :is(.player-chip, .score-chip, .level-chip, .lives, .streak-chip, .icon-btn) {
+    background: rgba(4, 26, 34, 0.8);
+  }
+  .play .overlay {
+    background: radial-gradient(ellipse at center, rgba(3, 21, 28, 0.74), rgba(3, 21, 28, 0.93));
+  }
+}
